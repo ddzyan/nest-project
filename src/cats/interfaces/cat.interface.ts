@@ -1,4 +1,4 @@
-export interface Cat {
+export interface CatRO {
   name: string;
   age: number;
   breed: string;
