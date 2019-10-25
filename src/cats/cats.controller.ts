@@ -11,17 +11,20 @@ import {
   HttpStatus,
   HttpException,
   Delete,
+  UseInterceptors,
   // UseFilters,
 } from '@nestjs/common';
 import { Response } from 'express';
 import { CatsService } from './cats.service';
 import { CatRO } from './interfaces/cat.interface';
 import { CreateCatDto } from './dto/create-cat.dto';
+//import { LoggingInterceptor } from '../common/logging.interceptor';
 import { ListAllEntities } from './dto/list-all-entities.dto';
 // import { CatEntity } from './cats.entity';
 //import { AllExceptionsFilter } from '../common/http-exception.filter';
 
-@Controller('cats') // 设置统一路由路径、
+@Controller('cats') // 设置统一路由路径
+//@UseInterceptors(LoggingInterceptor) // 拦截器将适用于控制器下的所有路由
 //@UseFilters(AllExceptionsFilter) // 将对内部路由起效
 export class CatsController {
   constructor(private readonly catsService: CatsService) {}
