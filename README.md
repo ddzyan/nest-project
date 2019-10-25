@@ -30,3 +30,4 @@ yarn run start:dev
 3. orm 功能加入，实现一般的 CURD 操作
 4. 完成自定义异常过滤器
 5. 将 app.module.ts 中的数据库连接配置，转移到根目录下的 ormconfig.json
+   1. entities 中的路径需要对应 dist 目录下，而不是 src
