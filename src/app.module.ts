@@ -11,19 +11,7 @@ import { LoggerMiddleware } from './common/middleware/logger.middleware';
 // import { CatEntity } from './cats/cats.entity'; 采用指定路径导入
 
 @Module({
-  imports: [
-    TypeOrmModule.forRoot({
-      type: 'mysql',
-      host: 'localhost',
-      port: 3306,
-      username: 'root',
-      password: '123456',
-      database: 'type_orm',
-      entities: [__dirname + '/**/*.entity{.ts,.js}'],
-      synchronize: true,
-    }),
-    CatsModule,
-  ],
+  imports: [TypeOrmModule.forRoot(), CatsModule],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
