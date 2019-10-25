@@ -8,7 +8,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { CatsModule } from './cats/cats.module';
 import { CatsController } from './cats/cats.controller';
 import { LoggerMiddleware } from './common/middleware/logger.middleware';
-import { CatEntity } from './cats/cats.entity';
+// import { CatEntity } from './cats/cats.entity'; 采用指定路径导入
 
 @Module({
   imports: [
@@ -19,7 +19,7 @@ import { CatEntity } from './cats/cats.entity';
       username: 'root',
       password: '123456',
       database: 'type_orm',
-      entities: [CatEntity],
+      entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: true,
     }),
     CatsModule,
