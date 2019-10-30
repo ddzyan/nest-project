@@ -73,6 +73,8 @@ export class CatsService {
     return delcat.affected;
   }
 
+  async updateCatForId(id: string): Promise<any> {}
+
   private buildCatRO(cat: CatEntity) {
     const { id, name, age, breed } = cat;
     const catRO = { id, name, age, breed };

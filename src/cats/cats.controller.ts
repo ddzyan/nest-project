@@ -11,32 +11,22 @@ import {
   HttpStatus,
   HttpException,
   Delete,
-  UseInterceptors,
+  Put,
   // UseFilters,
 } from '@nestjs/common';
 import { Response } from 'express';
 import { CatsService } from './cats.service';
 import { CatRO } from './interfaces/cat.interface';
 import { CreateCatDto } from './dto/create-cat.dto';
-//import { LoggingInterceptor } from '../common/logging.interceptor';
-import { ListAllEntities } from './dto/list-all-entities.dto';
-// import { CatEntity } from './cats.entity';
-//import { AllExceptionsFilter } from '../common/http-exception.filter';
 
 @Controller('cats') // 设置统一路由路径
-//@UseInterceptors(LoggingInterceptor) // 拦截器将适用于控制器下的所有路由
-//@UseFilters(AllExceptionsFilter) // 将对内部路由起效
 export class CatsController {
   constructor(private readonly catsService: CatsService) {}
 
-  /**
-   * CreateCatDto 定义传入的参数名称，类型和属性
-   * post 请求
-   */
   @Post('create')
   @HttpCode(200)
   async create(@Body() createCatDto: CreateCatDto) {
-    return await this.catsService.create(createCatDto);
+    return this.catsService.create(createCatDto);
   }
 
   @Get('all')
@@ -44,18 +34,14 @@ export class CatsController {
     return this.catsService.findAll();
   }
 
-  /**
-   * ListAllEntities 定义传入的参数名称，类型和属性
-   * get 请求
-   */
-  @Get('limit')
-  find(@Query() query: ListAllEntities) {
-    return `This action returns all cats (limit: ${query.limit} items)`;
-  }
-
-  @Delete('id/:id')
+  @Delete('del')
   async delcat(@Param('id') id) {
     return this.catsService.delCatById(id);
+  }
+
+  @Put('update')
+  async update(@Param('id') id) {
+    return id;
   }
 
   /**
@@ -76,16 +62,6 @@ export class CatsController {
     if (version && version === '5') {
       return { url: 'https://docs.nestjs.com/v5/' };
     }
-  }
-
-  /**
-   * 使用 express res 对象
-   * 设置响应状态和返回值
-   * 不推荐
-   */
-  @Post('res')
-  createRes(@Res() res: Response) {
-    res.status(HttpStatus.CREATED).send('hello word');
   }
 
   /**
