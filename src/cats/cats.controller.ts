@@ -7,17 +7,15 @@ import {
   Redirect,
   Query,
   Param,
-  Res,
   HttpStatus,
   HttpException,
   Delete,
   Put,
   // UseFilters,
 } from '@nestjs/common';
-import { Response } from 'express';
 import { CatsService } from './cats.service';
 import { CatRO } from './interfaces/cat.interface';
-import { CreateCatDto } from './dto/create-cat.dto';
+import { CreateCatDto, DelCatDto } from './dto';
 
 @Controller('cats') // 设置统一路由路径
 export class CatsController {
@@ -35,8 +33,8 @@ export class CatsController {
   }
 
   @Delete('del')
-  async delcat(@Param('id') id) {
-    return this.catsService.delCatById(id);
+  async del(@Body() params: DelCatDto) {
+    return this.catsService.delCatById(params);
   }
 
   @Put('update')
@@ -47,7 +45,7 @@ export class CatsController {
   /**
    * 匹配的路径是 http://localhost:3000/cats/1
    */
-  @Get('id/:id')
+  @Get(':id')
   findOne(@Param('id') id): Promise<CatRO> {
     return this.catsService.getCatById(id);
   }

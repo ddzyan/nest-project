@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, getRepository, DeleteResult } from 'typeorm';
 import { CatRO } from './interfaces/cat.interface';
 import { CatEntity } from './cats.entity';
-import { CreateCatDto } from './dto';
+import { CreateCatDto, DelCatDto } from './dto';
 
 @Injectable()
 export class CatsService {
@@ -68,8 +68,8 @@ export class CatsService {
     return this.buildCatRO(cat);
   }
 
-  async delCatById(id: string): Promise<number> {
-    const delcat = await this.CatsRepository.delete(id);
+  async delCatById(params: DelCatDto): Promise<number> {
+    const delcat = await this.CatsRepository.delete(params.id);
     return delcat.affected;
   }
 

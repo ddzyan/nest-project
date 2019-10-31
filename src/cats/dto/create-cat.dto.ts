@@ -1,7 +1,10 @@
 import { IsNotEmpty } from 'class-validator';
 
+/**
+ * 验证create接口传入的参数
+ *
+ */
 export class CreateCatDto {
-  // 参数验证
   @IsNotEmpty()
   readonly name: string;
   @IsNotEmpty()
