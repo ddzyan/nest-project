@@ -1,5 +1,6 @@
 /**
- * 使用拦截器，实现对路由执行结果进行包装，实现body封装
+ * 拦截器
+ * 获得路由最终返回结果，对结果进行统一封装处理
  */
 import {
   Injectable,
@@ -8,19 +9,21 @@ import {
   CallHandler,
 } from '@nestjs/common';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 
-export interface Response<T> {
+/* export interface Response<T> {
   data: T;
-}
+} */
 
 @Injectable()
-export class TransformInterceptor<T>
-  implements NestInterceptor<T, Response<T>> {
-  intercept(
-    context: ExecutionContext,
-    next: CallHandler,
-  ): Observable<Response<T>> {
-    return next.handle().pipe(map(data => ({ data })));
+export class TransformInterceptor implements NestInterceptor {
+  intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
+    const bodyTemple = {
+      statusCode: '1000',
+      message: 'SUCCESS',
+      sub_code: '0001',
+      success: true,
+    };
+    return next.handle().pipe(map(data => Object.assign(bodyTemple, { data })));
   }
 }

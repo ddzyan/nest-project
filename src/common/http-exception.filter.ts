@@ -21,8 +21,10 @@ export class AllExceptionsFilter implements ExceptionFilter {
 
     response.status(statusCode).json({
       statusCode,
-      timestamp: new Date().toISOString(),
-      path: request.url,
+      timestamp: new Date().toLocaleString(),
+      sub_code: '0001',
+      success: false,
+      data: {},
       message,
     });
   }

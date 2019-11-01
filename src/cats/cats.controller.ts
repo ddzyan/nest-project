@@ -3,7 +3,6 @@ import {
   Get,
   Post,
   Body,
-  HttpCode,
   Redirect,
   Query,
   Param,
@@ -22,7 +21,6 @@ export class CatsController {
   constructor(private readonly catsService: CatsService) {}
 
   @Post('create')
-  @HttpCode(200)
   async create(@Body() createCatDto: CreateCatDto) {
     return this.catsService.create(createCatDto);
   }

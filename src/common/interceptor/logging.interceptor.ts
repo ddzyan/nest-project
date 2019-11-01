@@ -15,16 +15,30 @@ import { tap } from 'rxjs/operators';
 export class LoggingInterceptor implements NestInterceptor {
   intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
     const req = context.switchToHttp().getRequest();
-    const { body, originalUrl, method, url, query } = req;
-    const params = {
-      originalUrl,
-      data: method === 'GET' ? query : body,
-      url,
-    };
-    console.log('requset begin :', JSON.stringify(params));
+    const { body, method, url, query } = req;
+
+    console.log(
+      `${new Date().toLocaleString()} ${url} ${method} begin||requestData:${
+        method === 'GET' ? JSON.stringify(query) : JSON.stringify(body)
+      }`,
+    );
     const now = Date.now();
-    return next
-      .handle()
-      .pipe(tap(() => console.log(`After... ${Date.now() - now}ms`)));
+    return next.handle().pipe(
+      tap(
+        data =>
+          console.log(
+            `${new Date().toLocaleString()} ${url} ${method} end||responseBody:${JSON.stringify(
+              data,
+            )}||time:${Date.now() - now}ms`,
+          ),
+        err => {
+          console.log(
+            `${new Date().toLocaleString()} ${url} ${method} error||errorDetail:${JSON.stringify(
+              err,
+            )}||time:${Date.now() - now}ms`,
+          );
+        },
+      ),
+    );
   }
 }
