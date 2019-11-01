@@ -54,3 +54,4 @@ yarn run start:dev
 ### 学习记录
 
 1. 了解 req.query,req.params 和 req.body 三种请求对象取值方式的使用场景
+2. 了解如何在 vscode 中 debug，配置文件选择 attach process 即可
