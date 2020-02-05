@@ -11,6 +11,6 @@ export class CatEntity {
   @Column('int')
   age: number;
 
-  @Column()
+  @Column('varchar')
   breed: string;
 }

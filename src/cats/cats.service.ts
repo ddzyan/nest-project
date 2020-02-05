@@ -4,12 +4,14 @@ import { Repository, getRepository, DeleteResult } from 'typeorm';
 import { CatRO } from './interfaces/cat.interface';
 import { CatEntity } from './cats.entity';
 import { CreateCatDto, DelCatDto } from './dto';
+import { ConfigService } from '../config/config.service';
 
 @Injectable()
 export class CatsService {
   constructor(
     @InjectRepository(CatEntity)
     private readonly CatsRepository: Repository<CatEntity>,
+    private readonly configService: ConfigService,
   ) {}
   // /private readonly cats: Cat[] = []; 单例对象，变量共享
 
@@ -52,6 +54,8 @@ export class CatsService {
     for (const cat of cats) {
       catsRO.push(this.buildCatRO(cat));
     }
+    const a = this.configService.get('HELLO_MESSAGE');
+    console.log(a);
     return catsRO;
   }
 

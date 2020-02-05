@@ -5,14 +5,18 @@ import { APP_FILTER } from '@nestjs/core';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AllExceptionsFilter } from '../common/http-exception.filter';
 import { CatEntity } from './cats.entity';
+import { ConfigModule } from '../config/config.module';
 @Module({
-  imports: [TypeOrmModule.forFeature([CatEntity])],
+  imports: [
+    TypeOrmModule.forFeature([CatEntity]),
+    ConfigModule.register({ folder: './config' }),
+  ],
   controllers: [CatsController],
   providers: [
     {
       provide: APP_FILTER,
       useClass: AllExceptionsFilter,
-    }, // 自定义异常过滤器，针对对象为一系列的控制器
+    },
     CatsService,
   ],
 })

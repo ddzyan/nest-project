@@ -7,9 +7,11 @@ import {
   TimeoutInterceptor,
 } from './common/interceptor';
 import { ValidationPipe } from '@nestjs/common';
+import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
 //import { AllExceptionsFilter } from './common/http-exception.filter';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  app.useLogger(app.get(WINSTON_MODULE_NEST_PROVIDER));
   app.useGlobalPipes(new ValidationPipe()); // 开启自动验证
   //app.useGlobalFilters(new AllExceptionsFilter()); // 全局的自定义异常捕捉，适用于全部控制器，全部路由
   app.useGlobalInterceptors(
